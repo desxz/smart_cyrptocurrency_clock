@@ -1,2 +1,2 @@
 # smart_cyrptocurrency_clock
-This is a embedded system project.
+![Design](https://github.com/desxz/smart_cyrptocurrency_clock/blob/main/mobile_app_design/Home%20Screen.png)
