@@ -1,3 +1,4 @@
+import 'package:cryptocurrency_mobile/view/home_screen/model/button_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,6 +8,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isConnectedFirebase = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SvgPicture.asset(
                   'assets/Logo.svg',
-                  color: Colors.white,
+                  color: isConnectedFirebase ? Colors.green : Colors.red,
                 ),
                 Text(
                   'CRYPTO\nCURRENCY',
@@ -74,15 +76,38 @@ class _HomeScreenState extends State<HomeScreen> {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
-                itemCount: 7,
+                itemCount: buttons.length,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff414954),
-                      borderRadius: BorderRadius.circular(8),
+                  child: GestureDetector(
+                    onTap: () {
+                      print(buttons[index]['coinName']);
+                    },
+                    child: Container(
+                      width: buttons[index]['width'],
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            buttons[index]['icon'],
+                          ),
+                          Text(
+                            buttons[index]['coinName'],
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(color: Colors.white),
+                          )
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color(0xff414954),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                   ),
                 ),
