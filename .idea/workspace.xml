@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="25956c4b-db31-4a78-816f-3643bd64c2b5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cryptocurrency_mobile/lib/view/home_screen/model/button_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/cryptocurrency_mobile/lib/view/home_screen/model/button_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cryptocurrency_mobile/lib/view/home_screen/view/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/cryptocurrency_mobile/lib/view/home_screen/view/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cryptocurrency_mobile/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cryptocurrency_mobile/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1r2HbQSKIpm6KzO1yRwgUyVVAZR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="25956c4b-db31-4a78-816f-3643bd64c2b5" name="Default Changelist" comment="" />
+      <created>1618167341299</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1618167341299</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="373" y="100" width="824" height="604" key="AVDManager" timestamp="1618168602457">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="373" y="100" width="824" height="604" key="AVDManager/0.0.1920.1040/1920.-376.1024.1240@0.0.1920.1040" timestamp="1618168602457" />
+  </component>
+</project>
