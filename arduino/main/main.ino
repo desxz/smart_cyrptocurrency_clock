@@ -2,12 +2,17 @@
 #include "ESP8266HTTPClient.h"
 #include "ArduinoJson.h"
 
-const char* ssid = "ssid"; 
-const char* password = "password";
+// Wifi Details
+const char* ssid = "#"; //Enter SSID
+const char* password = "#"; //Enter Password
 
+// API
 const String url = "http://api.coindesk.com/v1/bpi/currentprice.json";
 
-void setup() {
+HTTPClient http;
+
+void setup(void)
+{ 
   Serial.begin(115200);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) 
@@ -21,10 +26,10 @@ void setup() {
   Serial.println(ssid);
   Serial.print("ESP8266 Modül'ünün IP Adresi:");
   Serial.print(WiFi.localIP());
-
 }
 
-void loop() {
+void loop() 
+{
   Serial.println("");
   Serial.println("");
   Serial.println("[TEST] Loop'a giriş yapıldı.");
@@ -32,6 +37,7 @@ void loop() {
   WiFi.softAPdisconnect(false);
   WiFi.enableAP(false);
 
+  // API Request
   Serial.println("[TEST] API'ya request atıldı.");
   http.begin(url);
   int code = http.GET();
@@ -55,10 +61,9 @@ void loop() {
   } else {
     Serial.print("Failed to request to API, is the internet connection active? Return code: ");
     Serial.println(code);
-  
+    
   }
   
   http.end();
-  delay(20000); 
-
+  delay(20000); //Coindesk's API updates once twenty seconds
 }
