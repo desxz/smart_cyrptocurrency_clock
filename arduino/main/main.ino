@@ -1,7 +1,11 @@
 #include "ESP8266WiFi.h"
+#include "ESP8266HTTPClient.h"
+#include "ArduinoJson.h"
 
 const char* ssid = "ssid"; 
 const char* password = "password";
+
+const String url = "http://api.coindesk.com/v1/bpi/currentprice.json";
 
 void setup() {
   Serial.begin(115200);
@@ -21,6 +25,40 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  Serial.println("");
+  Serial.println("");
+  Serial.println("[TEST] Loop'a giriş yapıldı.");
+  
+  WiFi.softAPdisconnect(false);
+  WiFi.enableAP(false);
+
+  Serial.println("[TEST] API'ya request atıldı.");
+  http.begin(url);
+  int code = http.GET();
+  
+  if (code == 200) {
+    Serial.println("[TEST] Request Başarılı!");   
+    String payload = http.getString();
+
+    DynamicJsonDocument jsonBuffer(1100);
+    deserializeJson(jsonBuffer, payload);
+    JsonObject bpi = jsonBuffer["bpi"];
+    JsonObject bpi_USD = bpi["USD"];
+    int last = bpi_USD["rate_float"];  
+    
+    String sSSID = "1 BTC = $";
+    sSSID += last;
+
+    Serial.println(sSSID);
+    
+    WiFi.softAP(sSSID.c_str());
+  } else {
+    Serial.print("Failed to request to API, is the internet connection active? Return code: ");
+    Serial.println(code);
+  
+  }
+  
+  http.end();
+  delay(20000); 
 
 }
