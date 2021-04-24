@@ -1,3 +1,4 @@
+#include "WiFiClientSecure.h"
 #include "ESP8266WiFi.h"
 #include "ESP8266HTTPClient.h"
 #include "ArduinoJson.h"
@@ -5,11 +6,14 @@
 // Wifi Details
 const char* ssid = "#"; //Enter SSID
 const char* password = "#"; //Enter Password
+const int httpsPort = 443;
 
 // API
-const String url = "http://api.coindesk.com/v1/bpi/currentprice.json";
+const String url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd";
 
 HTTPClient http;
+WiFiClientSecure client;
+
 
 void setup(void)
 { 
@@ -37,9 +41,13 @@ void loop()
   WiFi.softAPdisconnect(false);
   WiFi.enableAP(false);
 
+
+  client.setInsecure();
+  client.connect(url, httpsPort);
+  
   // API Request
   Serial.println("[TEST] API'ya request atıldı.");
-  http.begin(url);
+  http.begin(client, url);
   int code = http.GET();
   
   if (code == 200) {
@@ -48,18 +56,17 @@ void loop()
 
     DynamicJsonDocument jsonBuffer(1100);
     deserializeJson(jsonBuffer, payload);
-    JsonObject bpi = jsonBuffer["bpi"];
-    JsonObject bpi_USD = bpi["USD"];
-    int last = bpi_USD["rate_float"];  
+    JsonObject coin = jsonBuffer["bitcoin"];
+    int price_coin = coin["usd"];
     
-    String sSSID = "1 BTC = $";
-    sSSID += last;
+    String message = "1 BTC = $";
+    message += price_coin;
 
-    Serial.println(sSSID);
+    Serial.println(message);
     
-    WiFi.softAP(sSSID.c_str());
+    WiFi.softAP(message.c_str());
   } else {
-    Serial.print("Failed to request to API, is the internet connection active? Return code: ");
+    Serial.print("Failed to request to API. The HTTP Error Code: ");
     Serial.println(code);
     
   }
