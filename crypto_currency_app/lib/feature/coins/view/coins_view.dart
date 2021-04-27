@@ -7,7 +7,9 @@ class CoinsView extends StatelessWidget {
   final _coinsViewModel = CoinsViewModel(
     service: CoinsService(
       Dio(
-        BaseOptions(baseUrl: ServicePath.BASE_URL.rawValue),
+        BaseOptions(
+          baseUrl: ServicePath.BASE_URL.rawValue,
+        ),
       ),
     ),
   );
