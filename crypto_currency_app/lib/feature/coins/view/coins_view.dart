@@ -1,19 +1,21 @@
-import 'package:crypto_currency_app/feature/coins/service/coins_service.dart';
-import 'package:crypto_currency_app/feature/coins/viewmodel/coins_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-class CoinsView extends StatelessWidget {
-  final _coinsViewModel = CoinsViewModel(
-    service: CoinsService(
-      Dio(
-        BaseOptions(
-          baseUrl: ServicePath.BASE_URL.rawValue,
-        ),
+import '../service/coins_service.dart';
+import '../viewmodel/coins_view_model.dart';
+
+final _coinsViewModel = CoinsViewModel(
+  service: CoinsService(
+    Dio(
+      BaseOptions(
+        baseUrl: ServicePath.BASE_URL.rawValue,
       ),
     ),
-  );
+  ),
+);
 
+class CoinsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,18 @@ class CoinsView extends StatelessWidget {
         title: Text('CoinPage'),
         centerTitle: true,
       ),
-      body: ListView.builder(itemBuilder: (context, index) => Text('DATA')),
+      body: Observer(
+        builder: (_) {
+          return _coinsViewModel.isLoading
+              ? CircularProgressIndicator()
+              : ListView.builder(
+                  itemCount: _coinsViewModel.coins.length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(_coinsViewModel.coins[index].name ?? ''),
+                  ),
+                );
+        },
+      ),
     );
   }
 }

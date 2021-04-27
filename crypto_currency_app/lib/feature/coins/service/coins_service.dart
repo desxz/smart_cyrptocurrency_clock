@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:crypto_currency_app/core/exception/service_path_not_defined_exception.dart';
-import 'package:crypto_currency_app/feature/coins/model/coins_model.dart';
-import 'package:crypto_currency_app/feature/coins/service/ICoinsService.dart';
 import 'package:dio/src/dio.dart';
+
+import '../../../core/exception/service_path_not_defined_exception.dart';
+import '../model/coins_model.dart';
+import 'ICoinsService.dart';
 
 class CoinsService extends ICoinsService {
   CoinsService(Dio dio) : super(dio);
@@ -15,7 +16,7 @@ class CoinsService extends ICoinsService {
     if (response.statusCode == HttpStatus.ok) {
       final responseData = response.data;
       if (responseData is List) {
-        return responseData.map((e) => Coin().fromJson(e)).toList();
+        return responseData.map<Coin>((e) => Coin().fromJson(e)).toList();
       }
     }
     return [];

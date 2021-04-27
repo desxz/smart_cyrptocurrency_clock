@@ -18,7 +18,7 @@ class Coin {
     this.currentPrice,
   });
 
-  Coin fromJson(Map<String, Object>? json) {
+  Coin fromJson(Map<String, dynamic>? json) {
     return _$CoinFromJson(json ?? {});
   }
 

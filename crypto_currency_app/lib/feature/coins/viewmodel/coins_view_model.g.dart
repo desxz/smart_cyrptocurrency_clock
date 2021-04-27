@@ -12,13 +12,13 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
   final _$coinsAtom = Atom(name: '_CoinsViewModelBase.coins');
 
   @override
-  Future<List<Coin>> get coins {
+  List<Coin> get coins {
     _$coinsAtom.reportRead();
     return super.coins;
   }
 
   @override
-  set coins(Future<List<Coin>> value) {
+  set coins(List<Coin> value) {
     _$coinsAtom.reportWrite(value, super.coins, () {
       super.coins = value;
     });
@@ -39,6 +39,13 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
     });
   }
 
+  final _$fetchsDataAsyncAction = AsyncAction('_CoinsViewModelBase.fetchsData');
+
+  @override
+  Future<void> fetchsData() {
+    return _$fetchsDataAsyncAction.run(() => super.fetchsData());
+  }
+
   final _$_CoinsViewModelBaseActionController =
       ActionController(name: '_CoinsViewModelBase');
 
@@ -48,17 +55,6 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
         name: '_CoinsViewModelBase.changeLoading');
     try {
       return super.changeLoading();
-    } finally {
-      _$_CoinsViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void fetchData() {
-    final _$actionInfo = _$_CoinsViewModelBaseActionController.startAction(
-        name: '_CoinsViewModelBase.fetchData');
-    try {
-      return super.fetchData();
     } finally {
       _$_CoinsViewModelBaseActionController.endAction(_$actionInfo);
     }

@@ -1,6 +1,7 @@
-import 'package:crypto_currency_app/feature/alarm/view/alarm_view.dart';
-import 'package:crypto_currency_app/feature/coins/view/coins_view.dart';
 import 'package:flutter/material.dart';
+
+import '../alarm/view/alarm_view.dart';
+import '../coins/view/coins_view.dart';
 
 class AppTabView extends StatelessWidget {
   @override
