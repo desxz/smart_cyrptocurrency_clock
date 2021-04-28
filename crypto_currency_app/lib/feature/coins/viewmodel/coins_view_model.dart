@@ -19,6 +19,18 @@ abstract class _CoinsViewModelBase with Store {
     fetchsData();
   }
 
+  @action
+  List<String>? getCoinListName(List<Coin> coinList) {
+    List<String> coinNames = [];
+    for (var iter in coinList) {
+      coinNames.add(iter.name.toString());
+    }
+    return coinNames;
+  }
+
+  @observable
+  String? ex2;
+
   @observable
   bool isLoading = true;
 

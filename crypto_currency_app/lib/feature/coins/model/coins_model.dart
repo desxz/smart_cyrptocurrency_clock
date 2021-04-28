@@ -25,4 +25,30 @@ class Coin {
   Map<String, dynamic> toJson() {
     return _$CoinToJson(this);
   }
+
+  @override
+  String toString() {
+    return 'Coin(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $currentPrice)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Coin &&
+        other.id == id &&
+        other.symbol == symbol &&
+        other.name == name &&
+        other.image == image &&
+        other.currentPrice == currentPrice;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        symbol.hashCode ^
+        name.hashCode ^
+        image.hashCode ^
+        currentPrice.hashCode;
+  }
 }
