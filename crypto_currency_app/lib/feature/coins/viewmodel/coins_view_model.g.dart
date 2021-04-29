@@ -24,6 +24,51 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
     });
   }
 
+  final _$listedCoinsAtom = Atom(name: '_CoinsViewModelBase.listedCoins');
+
+  @override
+  ObservableList<Coin> get listedCoins {
+    _$listedCoinsAtom.reportRead();
+    return super.listedCoins;
+  }
+
+  @override
+  set listedCoins(ObservableList<Coin> value) {
+    _$listedCoinsAtom.reportWrite(value, super.listedCoins, () {
+      super.listedCoins = value;
+    });
+  }
+
+  final _$alarmedCoinsAtom = Atom(name: '_CoinsViewModelBase.alarmedCoins');
+
+  @override
+  ObservableList<Coin> get alarmedCoins {
+    _$alarmedCoinsAtom.reportRead();
+    return super.alarmedCoins;
+  }
+
+  @override
+  set alarmedCoins(ObservableList<Coin> value) {
+    _$alarmedCoinsAtom.reportWrite(value, super.alarmedCoins, () {
+      super.alarmedCoins = value;
+    });
+  }
+
+  final _$ex2Atom = Atom(name: '_CoinsViewModelBase.ex2');
+
+  @override
+  String? get ex2 {
+    _$ex2Atom.reportRead();
+    return super.ex2;
+  }
+
+  @override
+  set ex2(String? value) {
+    _$ex2Atom.reportWrite(value, super.ex2, () {
+      super.ex2 = value;
+    });
+  }
+
   final _$isLoadingAtom = Atom(name: '_CoinsViewModelBase.isLoading');
 
   @override
@@ -50,6 +95,28 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
       ActionController(name: '_CoinsViewModelBase');
 
   @override
+  Coin findCoin(String name) {
+    final _$actionInfo = _$_CoinsViewModelBaseActionController.startAction(
+        name: '_CoinsViewModelBase.findCoin');
+    try {
+      return super.findCoin(name);
+    } finally {
+      _$_CoinsViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  List<String>? getCoinListName(List<Coin> coinList) {
+    final _$actionInfo = _$_CoinsViewModelBaseActionController.startAction(
+        name: '_CoinsViewModelBase.getCoinListName');
+    try {
+      return super.getCoinListName(coinList);
+    } finally {
+      _$_CoinsViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changeLoading() {
     final _$actionInfo = _$_CoinsViewModelBaseActionController.startAction(
         name: '_CoinsViewModelBase.changeLoading');
@@ -64,6 +131,9 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
   String toString() {
     return '''
 coins: ${coins},
+listedCoins: ${listedCoins},
+alarmedCoins: ${alarmedCoins},
+ex2: ${ex2},
 isLoading: ${isLoading}
     ''';
   }

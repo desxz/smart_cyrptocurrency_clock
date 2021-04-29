@@ -11,6 +11,15 @@ abstract class _CoinsViewModelBase with Store {
   @observable
   List<Coin> coins = [];
 
+  @observable
+  var listedCoins = ObservableList<Coin>();
+
+  @observable
+  var alarmedCoins = ObservableList<Coin>();
+
+  @action
+  Coin findCoin(String name) => coins.firstWhere((coin) => coin.name == name);
+
   ICoinsService service;
 
   _CoinsViewModelBase({
@@ -21,7 +30,7 @@ abstract class _CoinsViewModelBase with Store {
 
   @action
   List<String>? getCoinListName(List<Coin> coinList) {
-    List<String> coinNames = [];
+    var coinNames = <String>[];
     for (var iter in coinList) {
       coinNames.add(iter.name.toString());
     }

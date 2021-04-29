@@ -12,7 +12,7 @@ Coin _$CoinFromJson(Map<String, dynamic> json) {
     symbol: json['symbol'] as String?,
     name: json['name'] as String?,
     image: json['image'] as String?,
-    currentPrice: json['currentPrice'] as int?,
+    current_price: json['current_price'],
   );
 }
 
@@ -21,5 +21,5 @@ Map<String, dynamic> _$CoinToJson(Coin instance) => <String, dynamic>{
       'symbol': instance.symbol,
       'name': instance.name,
       'image': instance.image,
-      'currentPrice': instance.currentPrice,
+      'current_price': instance.current_price,
     };

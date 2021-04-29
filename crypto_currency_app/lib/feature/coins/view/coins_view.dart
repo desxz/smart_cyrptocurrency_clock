@@ -1,4 +1,4 @@
-import 'package:crypto_currency_app/feature/coins/model/coins_model.dart';
+import 'package:crypto_currency_app/core/exception/selected_coin_null_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -25,27 +25,53 @@ class CoinsView extends StatelessWidget {
       appBar: buildACoinsViewAppBar(),
       floatingActionButton: Observer(
         builder: (_) {
-          return FloatingActionButton(
-            onPressed: () {
-              SelectDialog.showModal<String>(
-                context,
-                label: "Crypto Currencies",
-                titleStyle: TextStyle(color: Colors.black),
-                showSearchBox: true,
-                selectedValue: _coinsViewModel.ex2,
-                backgroundColor: Colors.white,
-                items: _coinsViewModel.getCoinListName(_coinsViewModel.coins),
-                onChange: (String selected) {
-                  _coinsViewModel.ex2 = selected;
-                  print(_coinsViewModel.ex2);
-                },
-              );
-            },
-            child: Icon(Icons.add),
-          );
+          return buildFloatingActionButtonAddCoin(context);
         },
       ),
       body: buildCoinsViewBody(),
+    );
+  }
+
+  FloatingActionButton buildFloatingActionButtonAddCoin(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        SelectDialog.showModal<String>(
+          context,
+          label: 'Crypto Currencies',
+          titleStyle: TextStyle(color: Colors.black),
+          showSearchBox: true,
+          selectedValue: _coinsViewModel.ex2,
+          backgroundColor: Colors.white,
+          items: _coinsViewModel.getCoinListName(_coinsViewModel.coins),
+          onChange: (String selected) {
+            _coinsViewModel.ex2 = selected;
+            if (_coinsViewModel.ex2 != null) {
+              var findedCoin =
+                  _coinsViewModel.findCoin(_coinsViewModel.ex2.toString());
+              if (!_coinsViewModel.listedCoins.contains(findedCoin)) {
+                _coinsViewModel.listedCoins.add(findedCoin);
+                print(findedCoin);
+              } else {
+                final snackBar = buildCoinAlreadyHaveSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            } else {
+              throw SelectedCoinNullException();
+            }
+          },
+        );
+      },
+      child: Icon(Icons.add),
+    );
+  }
+
+  SnackBar buildCoinAlreadyHaveSnackBar() {
+    return SnackBar(
+      content: Text('Coin already in the list!'),
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () {},
+      ),
     );
   }
 
@@ -68,7 +94,7 @@ class CoinsView extends StatelessWidget {
 
   ListView buildListViewCoins() {
     return ListView.builder(
-      itemCount: _coinsViewModel.coins.length,
+      itemCount: _coinsViewModel.listedCoins.length,
       itemBuilder: (context, index) => buildDismissible(index),
     );
   }
@@ -76,10 +102,12 @@ class CoinsView extends StatelessWidget {
   Dismissible buildDismissible(int index) {
     return Dismissible(
       background: buildDismissibleContainer(),
-      key: Key(_coinsViewModel.coins[index].toString()),
-      onDismissed: (direction) => _coinsViewModel.coins.removeAt(index),
+      key: Key(_coinsViewModel.listedCoins[index].toString()),
+      onDismissed: (direction) {
+        _coinsViewModel.listedCoins.removeAt(index);
+      },
       child: CoinCard(
-        coin: _coinsViewModel.coins[index],
+        coin: _coinsViewModel.listedCoins[index],
       ),
     );
   }

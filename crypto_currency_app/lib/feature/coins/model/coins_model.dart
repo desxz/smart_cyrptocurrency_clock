@@ -8,14 +8,14 @@ class Coin {
   String? symbol;
   String? name;
   String? image;
-  int? currentPrice;
+  var current_price;
 
   Coin({
     this.id,
     this.symbol,
     this.name,
     this.image,
-    this.currentPrice,
+    this.current_price,
   });
 
   Coin fromJson(Map<String, dynamic>? json) {
@@ -28,7 +28,7 @@ class Coin {
 
   @override
   String toString() {
-    return 'Coin(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $currentPrice)';
+    return 'Coin(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $current_price)';
   }
 
   @override
@@ -40,7 +40,7 @@ class Coin {
         other.symbol == symbol &&
         other.name == name &&
         other.image == image &&
-        other.currentPrice == currentPrice;
+        other.current_price == current_price;
   }
 
   @override
@@ -49,6 +49,6 @@ class Coin {
         symbol.hashCode ^
         name.hashCode ^
         image.hashCode ^
-        currentPrice.hashCode;
+        current_price.hashCode;
   }
 }
