@@ -15,6 +15,9 @@ abstract class _CoinsViewModelBase with Store {
   var listedCoins = ObservableList<Coin>();
 
   @observable
+  ServiceStatus serviceStatus = ServiceStatus.NORMAL;
+
+  @observable
   var alarmedCoins = ObservableList<Coin>();
 
   @action
@@ -37,20 +40,39 @@ abstract class _CoinsViewModelBase with Store {
     return coinNames;
   }
 
+  @action
+  void refreshListedCoins(ObservableList<Coin> list) {
+    for (var coinInList in list) {
+      var findedCoin = findCoin(coinInList.name!);
+      print(findedCoin.current_price);
+      coinInList.current_price = findedCoin.current_price;
+    }
+    print(list);
+  }
+
   @observable
   String? ex2;
 
-  @observable
-  bool isLoading = true;
-
-  @action
-  void changeLoading() {
-    isLoading = !isLoading;
-  }
-
   @action
   Future<void> fetchsData() async {
+    serviceStatus = ServiceStatus.LOADING;
     coins = await service.fetchData();
-    changeLoading();
+    if (coins.isEmpty) {
+      serviceStatus = ServiceStatus.ERROR;
+    } else {
+      serviceStatus = ServiceStatus.OK;
+    }
   }
+
+  Future<void> refreshData() async {
+    await fetchsData();
+    refreshListedCoins(listedCoins);
+  }
+}
+
+enum ServiceStatus {
+  LOADING,
+  OK,
+  ERROR,
+  NORMAL,
 }

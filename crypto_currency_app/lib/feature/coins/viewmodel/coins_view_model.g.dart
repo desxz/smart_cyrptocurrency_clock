@@ -39,6 +39,21 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
     });
   }
 
+  final _$serviceStatusAtom = Atom(name: '_CoinsViewModelBase.serviceStatus');
+
+  @override
+  ServiceStatus get serviceStatus {
+    _$serviceStatusAtom.reportRead();
+    return super.serviceStatus;
+  }
+
+  @override
+  set serviceStatus(ServiceStatus value) {
+    _$serviceStatusAtom.reportWrite(value, super.serviceStatus, () {
+      super.serviceStatus = value;
+    });
+  }
+
   final _$alarmedCoinsAtom = Atom(name: '_CoinsViewModelBase.alarmedCoins');
 
   @override
@@ -66,21 +81,6 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
   set ex2(String? value) {
     _$ex2Atom.reportWrite(value, super.ex2, () {
       super.ex2 = value;
-    });
-  }
-
-  final _$isLoadingAtom = Atom(name: '_CoinsViewModelBase.isLoading');
-
-  @override
-  bool get isLoading {
-    _$isLoadingAtom.reportRead();
-    return super.isLoading;
-  }
-
-  @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
-      super.isLoading = value;
     });
   }
 
@@ -117,11 +117,11 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
   }
 
   @override
-  void changeLoading() {
+  void refreshListedCoins(ObservableList<Coin> list) {
     final _$actionInfo = _$_CoinsViewModelBaseActionController.startAction(
-        name: '_CoinsViewModelBase.changeLoading');
+        name: '_CoinsViewModelBase.refreshListedCoins');
     try {
-      return super.changeLoading();
+      return super.refreshListedCoins(list);
     } finally {
       _$_CoinsViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -132,9 +132,9 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
     return '''
 coins: ${coins},
 listedCoins: ${listedCoins},
+serviceStatus: ${serviceStatus},
 alarmedCoins: ${alarmedCoins},
-ex2: ${ex2},
-isLoading: ${isLoading}
+ex2: ${ex2}
     ''';
   }
 }

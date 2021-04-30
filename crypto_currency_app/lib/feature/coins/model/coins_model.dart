@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'coins_model.g.dart';
 
@@ -8,6 +9,8 @@ class Coin {
   String? symbol;
   String? name;
   String? image;
+
+  @observable
   var current_price;
 
   Coin({

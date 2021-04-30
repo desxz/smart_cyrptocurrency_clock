@@ -1,3 +1,4 @@
+import 'package:crypto_currency_app/core/constants/string_constants.dart';
 import 'package:crypto_currency_app/core/exception/selected_coin_null_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +24,7 @@ class CoinsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildACoinsViewAppBar(),
-      floatingActionButton: Observer(
-        builder: (_) {
-          return buildFloatingActionButtonAddCoin(context);
-        },
-      ),
+      floatingActionButton: buildFloatingActionButtonAddCoin(context),
       body: buildCoinsViewBody(),
     );
   }
@@ -37,7 +34,7 @@ class CoinsView extends StatelessWidget {
       onPressed: () {
         SelectDialog.showModal<String>(
           context,
-          label: 'Crypto Currencies',
+          label: StringConstant.instance.alertDialogLabel,
           titleStyle: TextStyle(color: Colors.black),
           showSearchBox: true,
           selectedValue: _coinsViewModel.ex2,
@@ -67,9 +64,9 @@ class CoinsView extends StatelessWidget {
 
   SnackBar buildCoinAlreadyHaveSnackBar() {
     return SnackBar(
-      content: Text('Coin already in the list!'),
+      content: Text(StringConstant.instance.coinAlreadyInTheList),
       action: SnackBarAction(
-        label: 'OK',
+        label: StringConstant.instance.ok,
         onPressed: () {},
       ),
     );
@@ -78,8 +75,9 @@ class CoinsView extends StatelessWidget {
   Observer buildCoinsViewBody() {
     return Observer(
       builder: (_) {
-        return _coinsViewModel.isLoading
-            ? CircularProgressIndicator()
+        return (_coinsViewModel.serviceStatus == ServiceStatus.NORMAL ||
+                _coinsViewModel.serviceStatus == ServiceStatus.LOADING)
+            ? Center(child: CircularProgressIndicator())
             : buildListViewCoins();
       },
     );
@@ -87,8 +85,14 @@ class CoinsView extends StatelessWidget {
 
   AppBar buildACoinsViewAppBar() {
     return AppBar(
-      title: Text('CoinPage'),
+      title: Text(StringConstant.instance.cryptoCoins),
       centerTitle: true,
+      actions: [
+        IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: _coinsViewModel.refreshData,
+        )
+      ],
     );
   }
 
@@ -106,9 +110,11 @@ class CoinsView extends StatelessWidget {
       onDismissed: (direction) {
         _coinsViewModel.listedCoins.removeAt(index);
       },
-      child: CoinCard(
-        coin: _coinsViewModel.listedCoins[index],
-      ),
+      child: Observer(builder: (_) {
+        return CoinCard(
+          coin: _coinsViewModel.listedCoins[index],
+        );
+      }),
     );
   }
 
