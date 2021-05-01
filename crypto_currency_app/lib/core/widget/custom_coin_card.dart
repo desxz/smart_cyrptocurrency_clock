@@ -1,21 +1,10 @@
-import 'package:crypto_currency_app/feature/coins/service/coins_service.dart';
-import 'package:crypto_currency_app/feature/coins/viewmodel/coins_view_model.dart';
-import 'package:dio/dio.dart';
+import 'package:crypto_currency_app/feature/alarm/viewmodel/alarm_view_model.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../feature/coins/model/coins_model.dart';
-
-final _coinsViewModel = CoinsViewModel(
-  service: CoinsService(
-    Dio(
-      BaseOptions(
-        baseUrl: ServicePath.BASE_URL.rawValue,
-      ),
-    ),
-  ),
-);
 
 // ignore: must_be_immutable
 class CoinCard extends StatelessWidget {
@@ -26,6 +15,7 @@ class CoinCard extends StatelessWidget {
   }) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
+  final _alarmViewModel = AlarmViewModel();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -71,23 +61,25 @@ class CoinCard extends StatelessWidget {
                     Text('1 ${coin.name} : \$${coin.current_price}'),
                     Form(
                       key: _formKey,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a value';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          icon: Icon(Icons.rate_review),
-                          hintText: 'Enter price to notification.',
-                        ),
-                        onSaved: (value) {
-                          _coinsViewModel.alarmedCoins.add(coin);
-                          print(_coinsViewModel.alarmedCoins);
-                        },
-                      ),
+                      child: Observer(builder: (_) {
+                        return TextFormField(
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a value';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.rate_review),
+                            hintText: 'Enter price to notification.',
+                          ),
+                          onSaved: (value) {
+                            _alarmViewModel.notificationedCoins.add(coin);
+                            print(_alarmViewModel.notificationedCoins);
+                          },
+                        );
+                      }),
                     ),
                   ],
                 ),

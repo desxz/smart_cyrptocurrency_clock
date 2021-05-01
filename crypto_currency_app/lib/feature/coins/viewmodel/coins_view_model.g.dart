@@ -54,21 +54,6 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
     });
   }
 
-  final _$alarmedCoinsAtom = Atom(name: '_CoinsViewModelBase.alarmedCoins');
-
-  @override
-  ObservableList<Coin> get alarmedCoins {
-    _$alarmedCoinsAtom.reportRead();
-    return super.alarmedCoins;
-  }
-
-  @override
-  set alarmedCoins(ObservableList<Coin> value) {
-    _$alarmedCoinsAtom.reportWrite(value, super.alarmedCoins, () {
-      super.alarmedCoins = value;
-    });
-  }
-
   final _$ex2Atom = Atom(name: '_CoinsViewModelBase.ex2');
 
   @override
@@ -133,7 +118,6 @@ mixin _$CoinsViewModel on _CoinsViewModelBase, Store {
 coins: ${coins},
 listedCoins: ${listedCoins},
 serviceStatus: ${serviceStatus},
-alarmedCoins: ${alarmedCoins},
 ex2: ${ex2}
     ''';
   }

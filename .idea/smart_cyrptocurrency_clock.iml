@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/crypto_currency_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/crypto_currency_app/build" />
       <excludeFolder url="file://$MODULE_DIR$/cryptocurrency_mobile/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/cryptocurrency_mobile/build" />
     </content>

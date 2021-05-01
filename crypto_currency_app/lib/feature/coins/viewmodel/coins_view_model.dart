@@ -17,9 +17,6 @@ abstract class _CoinsViewModelBase with Store {
   @observable
   ServiceStatus serviceStatus = ServiceStatus.NORMAL;
 
-  @observable
-  var alarmedCoins = ObservableList<Coin>();
-
   @action
   Coin findCoin(String name) => coins.firstWhere((coin) => coin.name == name);
 
@@ -44,10 +41,8 @@ abstract class _CoinsViewModelBase with Store {
   void refreshListedCoins(ObservableList<Coin> list) {
     for (var coinInList in list) {
       var findedCoin = findCoin(coinInList.name!);
-      print(findedCoin.current_price);
       coinInList.current_price = findedCoin.current_price;
     }
-    print(list);
   }
 
   @observable
