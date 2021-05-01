@@ -11,17 +11,16 @@ class AlarmView extends StatelessWidget {
         title: Text('Alarm Screen'),
       ),
       body: Observer(builder: (_) {
-        return ListView.builder(
-          itemCount: _alarmViewModel.notificationedCoins.length,
-          itemBuilder: (context, index) => Card(
-            child: ListTile(
-              title: Text(
-                _alarmViewModel.notificationedCoins[index].name!,
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ),
-        );
+        return GridView.builder(
+            itemCount: _alarmViewModel.notificationedCoins.length,
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemBuilder: (context, index) => Card(
+                  child: ListTile(
+                    title:
+                        Text(_alarmViewModel.notificationedCoins[index].name!),
+                  ),
+                ));
       }),
     );
   }

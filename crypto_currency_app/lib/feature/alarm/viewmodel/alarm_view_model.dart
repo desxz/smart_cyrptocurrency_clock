@@ -1,5 +1,7 @@
-import 'package:crypto_currency_app/feature/coins/model/coins_model.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../coins/model/coins_model.dart';
+
 part 'alarm_view_model.g.dart';
 
 class AlarmViewModel = _AlarmViewModelBase with _$AlarmViewModel;

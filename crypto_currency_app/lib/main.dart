@@ -1,5 +1,6 @@
-import 'package:crypto_currency_app/feature/tab/app_tab_view.dart';
 import 'package:flutter/material.dart';
+
+import 'feature/tab/app_tab_view.dart';
 
 void main() => runApp(MyApp());
 

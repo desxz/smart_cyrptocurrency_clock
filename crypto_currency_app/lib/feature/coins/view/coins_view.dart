@@ -1,10 +1,10 @@
-import 'package:crypto_currency_app/core/constants/string_constants.dart';
-import 'package:crypto_currency_app/core/exception/selected_coin_null_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:select_dialog/select_dialog.dart';
 
+import '../../../core/constants/string_constants.dart';
+import '../../../core/exception/selected_coin_null_exception.dart';
 import '../../../core/widget/custom_coin_card.dart';
 import '../service/coins_service.dart';
 import '../viewmodel/coins_view_model.dart';
