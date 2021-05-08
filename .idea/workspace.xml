@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25956c4b-db31-4a78-816f-3643bd64c2b5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/smart_cyrptocurrency_clock.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/smart_cyrptocurrency_clock.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_currency_app/lib/core/widget/custom_coin_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_currency_app/lib/core/widget/custom_coin_card.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_currency_app/lib/feature/alarm/view/alarm_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_currency_app/lib/feature/alarm/view/alarm_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_currency_app/lib/feature/alarm/viewmodel/alarm_view_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_currency_app/lib/feature/alarm/viewmodel/alarm_view_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_currency_app/lib/feature/alarm/viewmodel/alarm_view_model.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_currency_app/lib/feature/alarm/viewmodel/alarm_view_model.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_currency_app/lib/feature/coins/viewmodel/coins_view_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_currency_app/lib/feature/coins/viewmodel/coins_view_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_currency_app/lib/feature/coins/viewmodel/coins_view_model.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_currency_app/lib/feature/coins/viewmodel/coins_view_model.g.dart" afterDir="false" />
-    </list>
+    <list default="true" id="25956c4b-db31-4a78-816f-3643bd64c2b5" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,7 +20,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Flutter Null Safety Project/club_house_clone" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -49,5 +41,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="373" y="100" width="824" height="604" key="AVDManager/0.0.1920.1040/1920.-376.1024.1240@0.0.1920.1040" timestamp="1618168602457" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1620084725889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.-454.1024.1240@0.0.1920.1040" timestamp="1620084725889" />
   </component>
 </project>

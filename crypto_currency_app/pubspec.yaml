@@ -28,6 +28,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dialog: ^0.7.2+1
   dio: ^4.0.0
+  firebase_database: ^6.1.2
   flutter_mobx: ^2.0.0
   json_annotation: ^4.0.1
   json_serializable: ^4.1.1
