@@ -1,13 +1,11 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:crypto_currency_app/core/constants/navigation/navigation_constants.dart';
 import 'package:flutter/material.dart';
 
+import 'core/init/navigation/navigation_route.dart';
+import 'core/init/navigation/navigation_service.dart';
 import 'feature/tab/app_tab_view.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
-  //await Firebase.initializeApp();
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -15,6 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Material App',
       home: AppTabView(),
+      onGenerateRoute: NavigationRoute.instance.generateRoute,
+      navigatorKey: NavigationService.instance.navigatorKey,
+      initialRoute: NavigationConstants.COINS_VIEW,
     );
   }
 }
