@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AuthenticationService {
   static AuthenticationService? _instance;
@@ -8,7 +8,8 @@ class AuthenticationService {
   AuthenticationService._init();
 
   final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
+  //final _firestore = FirebaseFirestore.instance;
+  final _realTimeDatabase = FirebaseDatabase.instance.reference();
 
   Future<User?>? signIn(String email, String passwd) async {
     var user =
@@ -25,11 +26,12 @@ class AuthenticationService {
         email: email, password: passwd);
 
     if (user.user != null) {
-      await _firestore.collection('User').doc(user.user!.uid).set({
-        'email': email,
-        'password': passwd,
-      });
-      return user.user;
+      await _realTimeDatabase.child('Users').child(user.user!.uid).set(
+        {
+          'coins': [],
+          'alarms': {},
+        },
+      );
     }
   }
 }
