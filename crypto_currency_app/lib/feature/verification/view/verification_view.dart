@@ -1,4 +1,5 @@
-import 'package:crypto_currency_app/feature/login_register/service/firebase_authentication_service.dart';
+import 'package:crypto_currency_app/core/constants/navigation/navigation_constants.dart';
+import 'package:crypto_currency_app/core/init/navigation/navigation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -7,21 +8,22 @@ class VerificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Center(
-            child: Text('Your account is not verified!\n'),
-          ),
-          TextButton(
-              onPressed: () {
-                if (_auth.currentUser != null) {
-                  AuthenticationService.instance
-                      .sendEmailVerification(_auth.currentUser!);
-                }
-              },
-              child: Text('Verify Email')),
-        ],
-      ),
-    );
+        body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+            'Verify mail sent your email address! Please verify your account.'),
+        Text('If verify your account tab the button.'),
+        TextButton(
+            onPressed: () {
+              if (_auth.currentUser != null &&
+                  _auth.currentUser!.emailVerified) {
+                NavigationService.instance
+                    .navigateToPage(path: NavigationConstants.TAB_VIEW);
+              }
+            },
+            child: Text('Home Screen'))
+      ],
+    ));
   }
 }

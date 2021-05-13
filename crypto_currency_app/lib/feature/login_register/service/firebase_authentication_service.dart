@@ -29,18 +29,15 @@ class AuthenticationService {
     }
   }
 
-  Future<User?>? signUp(
-      String email, String passwd, String name, String surname, String) async {
+  Future<User?>? signUp(String email, String passwd, String name,
+      String surname, String device_id) async {
     try {
       UserCredential? user = await _auth.createUserWithEmailAndPassword(
           email: email, password: passwd);
 
       if (_auth.currentUser != null) {
+        print('TEST');
         await sendEmailVerification(user.user!);
-        await _auth.signOut();
-      }
-
-      if (user.user != null) {
         await _realTimeDatabase.child('Users').child(user.user!.uid).set(
           {
             'coins': [],
@@ -52,6 +49,7 @@ class AuthenticationService {
           },
         );
       }
+      await _auth.signOut();
     } catch (e) {
       print(e.toString());
     }

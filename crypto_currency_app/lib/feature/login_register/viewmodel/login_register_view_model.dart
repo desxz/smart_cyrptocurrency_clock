@@ -12,3 +12,15 @@ extension EmailValidator on String {
     return StringConstant.instance.emailRegex.hasMatch(this);
   }
 }
+
+extension PasswprdValidator on String {
+  bool isValidPassword() {
+    return StringConstant.instance.passwordRegex.hasMatch(this);
+  }
+}
+
+extension NameSurnameValidator on String {
+  bool isValidNameSurname() {
+    return StringConstant.instance.nameSurnameRegex.hasMatch(this);
+  }
+}

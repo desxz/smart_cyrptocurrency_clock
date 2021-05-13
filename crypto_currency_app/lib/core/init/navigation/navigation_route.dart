@@ -1,4 +1,5 @@
 import 'package:crypto_currency_app/feature/login_register/view/login_view.dart';
+import 'package:crypto_currency_app/feature/login_register/view/register_view.dart';
 import 'package:crypto_currency_app/feature/tab/app_tab_view.dart';
 import 'package:crypto_currency_app/feature/verification/view/verification_view.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class NavigationRoute {
         return normalNavigate(AppTabView());
       case NavigationConstants.LOGIN_VIEW:
         return normalNavigate(LoginView());
+      case NavigationConstants.REGISTER_VIEW:
+        return normalNavigate(RegisterView());
       case NavigationConstants.VERIFICATION_VIEW:
         return normalNavigate(VerificationView());
       default:
