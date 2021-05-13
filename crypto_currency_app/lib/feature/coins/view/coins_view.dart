@@ -87,6 +87,10 @@ class CoinsView extends StatelessWidget {
     return AppBar(
       title: Text(StringConstant.instance.cryptoCoins),
       centerTitle: true,
+      leading: IconButton(
+        icon: Icon(Icons.menu),
+        onPressed: () {},
+      ),
       actions: [
         IconButton(
           icon: Icon(Icons.refresh),

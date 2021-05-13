@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      //home: AppTabView(),
+      //home: NotFoundNavigationWidget(),
       onGenerateRoute: NavigationRoute.instance.generateRoute,
       navigatorKey: NavigationService.instance.navigatorKey,
-      initialRoute: NavigationConstants.TAB_VIEW,
+      initialRoute: NavigationConstants.LOGIN_VIEW,
     );
   }
 }
