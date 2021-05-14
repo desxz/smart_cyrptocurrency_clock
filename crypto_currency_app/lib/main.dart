@@ -7,6 +7,7 @@ import 'core/init/navigation/navigation_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 
   runApp(MyApp());

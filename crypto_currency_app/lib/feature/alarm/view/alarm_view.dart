@@ -8,6 +8,7 @@ class AlarmView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(Icons.text_snippet),
         title: Text('Alarm Screen'),
       ),
       body: Observer(builder: (_) {

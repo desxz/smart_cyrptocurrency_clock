@@ -1,3 +1,4 @@
+import 'package:crypto_currency_app/core/exception/widget/network_connection_exception.dart';
 import 'package:crypto_currency_app/feature/login_register/view/login_view.dart';
 import 'package:crypto_currency_app/feature/login_register/view/register_view.dart';
 import 'package:crypto_currency_app/feature/tab/app_tab_view.dart';

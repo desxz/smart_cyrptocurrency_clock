@@ -1,3 +1,4 @@
+import 'package:crypto_currency_app/feature/login_register/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -29,27 +30,17 @@ class AuthenticationService {
     }
   }
 
-  Future<User?>? signUp(String email, String passwd, String name,
-      String surname, String device_id) async {
+  Future<User?>? signUp(UserModel userModel, User? currentUser) async {
     try {
       UserCredential? user = await _auth.createUserWithEmailAndPassword(
-          email: email, password: passwd);
+          email: userModel.email.toString(),
+          password: userModel.password.toString());
 
       if (_auth.currentUser != null) {
         print('TEST');
+        await createData(userModel, user.user!);
         await sendEmailVerification(user.user!);
-        await _realTimeDatabase.child('Users').child(user.user!.uid).set(
-          {
-            'coins': [],
-            'alarms': {},
-            'name': '',
-            'surname': '',
-            'e-mail_address': '',
-            'device_id': 0,
-          },
-        );
       }
-      await _auth.signOut();
     } catch (e) {
       print(e.toString());
     }
@@ -61,5 +52,16 @@ class AuthenticationService {
 
   Future<void> forgotPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<void> createData(UserModel userModel, User user) async {
+    await _realTimeDatabase
+        .child(
+            '${userModel.name} + ${userModel.surname} + ${userModel.deviceId}')
+        .set(
+      {
+        'name': userModel.name,
+      },
+    );
   }
 }

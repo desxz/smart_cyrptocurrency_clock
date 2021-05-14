@@ -3,7 +3,17 @@ import 'package:flutter/material.dart';
 import '../alarm/view/alarm_view.dart';
 import '../coins/view/coins_view.dart';
 
-class AppTabView extends StatelessWidget {
+class AppTabView extends StatefulWidget {
+  @override
+  _AppTabViewState createState() => _AppTabViewState();
+}
+
+class _AppTabViewState extends State<AppTabView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

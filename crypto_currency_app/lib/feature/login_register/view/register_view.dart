@@ -1,9 +1,11 @@
 import 'package:crypto_currency_app/core/constants/navigation/navigation_constants.dart';
 import 'package:crypto_currency_app/core/init/navigation/navigation_service.dart';
+import 'package:crypto_currency_app/feature/login_register/model/user_model.dart';
 import 'package:crypto_currency_app/feature/login_register/service/firebase_authentication_service.dart';
 import 'package:crypto_currency_app/feature/login_register/viewmodel/login_register_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -17,26 +19,18 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final _loginRegisterViewModel = LoginRegisterViewModel();
   final _auth = FirebaseAuth.instance;
+
+  UserModel userModel =
+      UserModel(name: '', deviceId: '', password: '', email: '', surname: '');
 
   @override
   void initState() {
     super.initState();
-    _auth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User sign out!');
-      } else {
-        print('User signed in');
-      }
-    });
-  }
 
-  late String _name;
-  late String _surname;
-  late String _email;
-  late String _passwd;
-  String _device_id = '0';
+    _auth.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +49,8 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _nameController,
                   validator: (value) {
                     if (value != null && value.isValidNameSurname()) {
-                      _name = value;
+                      userModel.name = value;
+                      print(userModel.name);
                     } else {
                       return 'Check your name!';
                     }
@@ -71,7 +66,8 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _surnameController,
                   validator: (value) {
                     if (value != null && value.isValidNameSurname()) {
-                      _surname = value;
+                      userModel.surname = value;
+                      print(userModel.surname);
                     } else {
                       return 'Check your surname!';
                     }
@@ -87,7 +83,8 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _emailController,
                   validator: (value) {
                     if (value != null && value.isValidEmail()) {
-                      _email = value;
+                      userModel.email = value;
+                      print(userModel.email);
                     } else {
                       return 'Check your email address!';
                     }
@@ -102,8 +99,9 @@ class _RegisterViewState extends State<RegisterView> {
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
-                    if (value != null || value!.isValidPassword()) {
-                      _passwd = value;
+                    if (value != null && value.isValidPassword()) {
+                      userModel.password = value;
+                      print(userModel.password);
                     } else {
                       return 'Check your password';
                     }
@@ -117,9 +115,10 @@ class _RegisterViewState extends State<RegisterView> {
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      _device_id = '0';
+                      userModel.deviceId = '0';
                     } else {
-                      _device_id = value;
+                      userModel.deviceId = value;
+                      print(userModel.deviceId);
                     }
                   },
                   decoration: InputDecoration(
@@ -131,9 +130,9 @@ class _RegisterViewState extends State<RegisterView> {
                 TextButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      print('EXE');
                       await AuthenticationService.instance
-                          .signUp(_email, _passwd, _name, _surname, _device_id);
-
+                          .signUp(userModel, _auth.currentUser);
                       await NavigationService.instance.navigateToPage(
                           path: NavigationConstants.VERIFICATION_VIEW);
                     }

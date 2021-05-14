@@ -22,13 +22,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     super.initState();
-    _auth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User sign out!');
-      } else {
-        print('User signed in');
-      }
-    });
+    _auth.signOut();
   }
 
   late String _email;
@@ -84,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                       await AuthenticationService.instance
                           .signIn(_email, _passwd);
                       if (_auth.currentUser!.emailVerified) {
-                        NavigationService.instance
+                        await NavigationService.instance
                             .navigateToPage(path: NavigationConstants.TAB_VIEW);
                       } else {
                         await NavigationService.instance.navigateToPage(

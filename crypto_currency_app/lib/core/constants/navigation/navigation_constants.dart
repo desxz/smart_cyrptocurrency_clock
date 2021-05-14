@@ -5,4 +5,5 @@ class NavigationConstants {
   static const LOGIN_VIEW = '/login';
   static const REGISTER_VIEW = '/register';
   static const VERIFICATION_VIEW = '/verification';
+  static const CONNECTION_ERROR = '/connection_error';
 }
