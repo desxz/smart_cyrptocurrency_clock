@@ -8,7 +8,7 @@ class ConnectionFaildScreen extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            "assets/images/19_Error.png",
+            'assets/images/19_Error.png',
             fit: BoxFit.cover,
           ),
           Positioned(
@@ -31,7 +31,7 @@ class ConnectionFaildScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50)),
                 onPressed: () {},
                 child: Text(
-                  "retry".toUpperCase(),
+                  'retry'.toUpperCase(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),

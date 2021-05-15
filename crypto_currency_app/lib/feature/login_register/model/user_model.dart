@@ -9,6 +9,8 @@ class UserModel {
   String? email;
   String? password;
   String? deviceId;
+  Map? coins;
+  Map? alarms;
 
   UserModel({
     required this.name,
@@ -16,6 +18,8 @@ class UserModel {
     required this.email,
     required this.password,
     required this.deviceId,
+    this.coins,
+    this.alarms,
   });
 
   factory UserModel.fromJson(json) {

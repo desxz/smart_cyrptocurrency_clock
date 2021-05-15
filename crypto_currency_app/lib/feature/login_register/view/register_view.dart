@@ -19,7 +19,6 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _loginRegisterViewModel = LoginRegisterViewModel();
   final _auth = FirebaseAuth.instance;
 
   UserModel userModel =
@@ -131,8 +130,7 @@ class _RegisterViewState extends State<RegisterView> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       print('EXE');
-                      await AuthenticationService.instance
-                          .signUp(userModel, _auth.currentUser);
+                      await AuthenticationService.instance.signUp(userModel);
                       await NavigationService.instance.navigateToPage(
                           path: NavigationConstants.VERIFICATION_VIEW);
                     }

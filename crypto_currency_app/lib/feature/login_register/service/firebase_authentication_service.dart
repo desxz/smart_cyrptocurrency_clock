@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:crypto_currency_app/core/exception/firebase_path_exception.dart';
 import 'package:crypto_currency_app/feature/login_register/model/user_model.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -10,13 +14,20 @@ class AuthenticationService {
 
   final _auth = FirebaseAuth.instance;
   //final _firestore = FirebaseFirestore.instance;
-  final _realTimeDatabase = FirebaseDatabase.instance.reference();
+
+  final _dio = Dio(
+    BaseOptions(baseUrl: FirebaseDatabasePath.BASE_URL.rawValue),
+  );
 
   Future<User?>? signIn(String email, String passwd) async {
     try {
-      var user = await _auth.signInWithEmailAndPassword(
+      var userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: passwd);
-      return user.user;
+
+      var user = userCredential.user;
+      if (user != null) {
+        return user;
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -30,16 +41,19 @@ class AuthenticationService {
     }
   }
 
-  Future<User?>? signUp(UserModel userModel, User? currentUser) async {
+  Future<User?>? signUp(UserModel userModel) async {
     try {
-      UserCredential? user = await _auth.createUserWithEmailAndPassword(
-          email: userModel.email.toString(),
-          password: userModel.password.toString());
+      UserCredential? userCredential =
+          await _auth.createUserWithEmailAndPassword(
+              email: userModel.email.toString(),
+              password: userModel.password.toString());
+      User? user;
+      user = userCredential.user;
 
-      if (_auth.currentUser != null) {
+      if (user != null) {
         print('TEST');
-        await createData(userModel, user.user!);
-        await sendEmailVerification(user.user!);
+        await sendEmailVerification(user);
+        await realTimeDatabasePostUserWithDio(user, userModel);
       }
     } catch (e) {
       print(e.toString());
@@ -54,14 +68,36 @@ class AuthenticationService {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
-  Future<void> createData(UserModel userModel, User user) async {
-    await _realTimeDatabase
-        .child(
-            '${userModel.name} + ${userModel.surname} + ${userModel.deviceId}')
-        .set(
-      {
-        'name': userModel.name,
-      },
-    );
+  Future<bool> realTimeDatabasePostUserWithDio(
+      User user, UserModel userModel) async {
+    final postDataResponse = await _dio.post(
+        FirebaseDatabasePath.USER_POST.rawValue + '${user.uid}.json',
+        data: userModel);
+
+    if (postDataResponse.statusCode == HttpStatus.ok) {
+      return true;
+    }
+    return false;
+  }
+}
+
+enum FirebaseDatabasePath {
+  BASE_URL,
+  USERS,
+  USER_POST,
+}
+
+extension FirebaseDatabasePathExtension on FirebaseDatabasePath {
+  String get rawValue {
+    switch (this) {
+      case FirebaseDatabasePath.BASE_URL:
+        return 'https://crypto-currency-75f19-default-rtdb.europe-west1.firebasedatabase.app';
+      case FirebaseDatabasePath.USERS:
+        return '/Users.json';
+      case FirebaseDatabasePath.USER_POST:
+        return '/Users/';
+      default:
+        throw FirebaseDatabaseServicePathNotDefinedException(this);
+    }
   }
 }
