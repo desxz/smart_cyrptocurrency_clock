@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:crypto_currency_app/core/exception/firebase_path_exception.dart';
-import 'package:crypto_currency_app/feature/login_register/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
+import '../../../core/exception/firebase_path_exception.dart';
+import '../model/user_model.dart';
 
 class AuthenticationService {
   static AuthenticationService? _instance;

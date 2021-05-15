@@ -1,5 +1,6 @@
-import 'package:crypto_currency_app/core/constants/string_constants.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../core/constants/string_constants.dart';
 
 part 'login_register_view_model.g.dart';
 

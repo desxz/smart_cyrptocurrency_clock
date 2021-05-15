@@ -1,7 +1,7 @@
-import 'package:crypto_currency_app/core/constants/navigation/navigation_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'core/constants/navigation/navigation_constants.dart';
 import 'core/init/navigation/navigation_route.dart';
 import 'core/init/navigation/navigation_service.dart';
 

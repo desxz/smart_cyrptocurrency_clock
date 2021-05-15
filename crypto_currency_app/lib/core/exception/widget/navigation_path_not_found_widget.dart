@@ -1,5 +1,6 @@
-import 'package:crypto_currency_app/core/init/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
+
+import '../../init/navigation/navigation_service.dart';
 
 class NotFoundNavigationWidget extends StatelessWidget {
   @override

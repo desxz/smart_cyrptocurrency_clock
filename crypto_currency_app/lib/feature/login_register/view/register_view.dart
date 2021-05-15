@@ -1,11 +1,12 @@
-import 'package:crypto_currency_app/core/constants/navigation/navigation_constants.dart';
-import 'package:crypto_currency_app/core/init/navigation/navigation_service.dart';
-import 'package:crypto_currency_app/feature/login_register/model/user_model.dart';
-import 'package:crypto_currency_app/feature/login_register/service/firebase_authentication_service.dart';
-import 'package:crypto_currency_app/feature/login_register/viewmodel/login_register_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../../core/constants/navigation/navigation_constants.dart';
+import '../../../core/init/navigation/navigation_service.dart';
+import '../model/user_model.dart';
+import '../service/firebase_authentication_service.dart';
+import '../viewmodel/login_register_view_model.dart';
 
 class RegisterView extends StatefulWidget {
   @override

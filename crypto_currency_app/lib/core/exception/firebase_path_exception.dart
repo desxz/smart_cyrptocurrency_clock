@@ -1,4 +1,4 @@
-import 'package:crypto_currency_app/feature/login_register/service/firebase_authentication_service.dart';
+import '../../feature/login_register/service/firebase_authentication_service.dart';
 
 class FirebaseDatabaseServicePathNotDefinedException implements Exception {
   FirebaseDatabaseServicePathNotDefinedException(

@@ -1,12 +1,12 @@
-import 'package:crypto_currency_app/feature/login_register/view/login_view.dart';
-import 'package:crypto_currency_app/feature/login_register/view/register_view.dart';
-import 'package:crypto_currency_app/feature/tab/app_tab_view.dart';
-import 'package:crypto_currency_app/feature/verification/view/verification_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../feature/alarm/view/alarm_view.dart';
 import '../../../feature/coins/view/coins_view.dart';
+import '../../../feature/login_register/view/login_view.dart';
+import '../../../feature/login_register/view/register_view.dart';
+import '../../../feature/tab/app_tab_view.dart';
+import '../../../feature/verification/view/verification_view.dart';
 import '../../constants/navigation/navigation_constants.dart';
 import '../../exception/widget/navigation_path_not_found_widget.dart';
 
