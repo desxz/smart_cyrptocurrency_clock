@@ -1,4 +1,6 @@
+import 'package:crypto_currency_app/feature/login_register/service/firebase_authentication_service.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:select_dialog/select_dialog.dart';
@@ -18,6 +20,8 @@ final _coinsViewModel = CoinsViewModel(
     ),
   ),
 );
+
+var _auth = FirebaseAuth.instance;
 
 class CoinsView extends StatelessWidget {
   @override
@@ -89,7 +93,10 @@ class CoinsView extends StatelessWidget {
       centerTitle: true,
       leading: IconButton(
         icon: Icon(Icons.menu),
-        onPressed: () {},
+        onPressed: () {
+          AuthenticationService.instance
+              .removeAccountPermanently(_auth.currentUser!);
+        },
       ),
       actions: [
         IconButton(

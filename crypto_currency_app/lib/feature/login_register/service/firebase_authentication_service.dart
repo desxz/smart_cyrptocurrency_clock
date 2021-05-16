@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../../../core/exception/firebase_path_exception.dart';
 import '../model/user_model.dart';
@@ -14,11 +16,14 @@ class AuthenticationService {
 
   final _auth = FirebaseAuth.instance;
   //final _firestore = FirebaseFirestore.instance;
+  static FirebaseApp _firebaseApp = Firebase.app();
 
   final _dio = Dio(
     BaseOptions(baseUrl: FirebaseDatabasePath.BASE_URL.rawValue),
   );
 
+  final _userRef = FirebaseDatabase.instance.reference().child('Users');
+  final FirebaseDatabase database = FirebaseDatabase(app: _firebaseApp);
   Future<User?>? signIn(String email, String passwd) async {
     try {
       var userCredential = await _auth.signInWithEmailAndPassword(
@@ -66,6 +71,11 @@ class AuthenticationService {
 
   Future<void> forgotPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<void> removeAccountPermanently(User user) async {
+    await user.delete();
+    await _userRef.child(user.uid).remove();
   }
 
   Future<bool> realTimeDatabasePostUserWithDio(
