@@ -4,8 +4,8 @@
 #include "ArduinoJson.h"
 
 // Wifi Details
-const char* ssid = "#"; //Enter SSID
-const char* password = "#"; //Enter Password
+const char* ssid = "SUPERONLINE-WiFi_3177"; //Enter SSID
+const char* password = "PYVT4NU9UREA"; //Enter Password
 const int httpsPort = 443;
 
 // API
@@ -37,7 +37,17 @@ void loop()
   Serial.println("");
   Serial.println("");
   Serial.println("[TEST] Loop'a giriş yapıldı.");
+  ApiRequest();
   
+  
+  delay(20000); //Coindesk's API updates once twenty seconds
+}
+
+
+void ApiRequest(){
+
+  Serial.println("[TEST] APIRequest Çalıştı!");
+
   WiFi.softAPdisconnect(false);
   WiFi.enableAP(false);
 
@@ -46,14 +56,11 @@ void loop()
   client.connect(url, httpsPort);
   
   // API Request
-  Serial.println("[TEST] API'ya request atıldı.");
   http.begin(client, url);
   int code = http.GET();
   
   if (code == 200) {
-    Serial.println("[TEST] Request Başarılı!");   
     String payload = http.getString();
-
     DynamicJsonDocument jsonBuffer(1100);
     deserializeJson(jsonBuffer, payload);
     JsonObject coin = jsonBuffer["bitcoin"];
@@ -72,5 +79,6 @@ void loop()
   }
   
   http.end();
-  delay(20000); //Coindesk's API updates once twenty seconds
+
+  
 }
