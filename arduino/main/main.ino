@@ -12,7 +12,9 @@ const int httpsPort = 443;
 // Firebase Rest Api
 String rest_api_url = "https://crypto-currency-75f19-default-rtdb.europe-west1.firebasedatabase.app/.json";
 
-char *myStrings[] = {"bitcoin", "ethereum"};
+
+String selected_coins[10];
+String myStrings[10];
 
 
 // API
@@ -47,9 +49,7 @@ void loop()
   delay(20000); //Coindesk's API updates once twenty seconds
 }
 
-
-
-void FirebaseRestApi(){
+void FirebaseRestApi2(){
   Serial.println("");
   Serial.println("");
 
@@ -69,18 +69,72 @@ void FirebaseRestApi(){
     String payload = http.getString();
     DynamicJsonDocument jsonBuffer(1100);
     deserializeJson(jsonBuffer, payload);
+    String alarms = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["coins"];
+    splittingStrToArray(alarms);
+       
+    
+    
+  } 
+  else {
+    Serial.print("Failed to request to API. The HTTP Error Code: ");
+    Serial.println(code);
+    
+  }
+  
+  http.end();
+
+  
+}
+
+
+
+
+void FirebaseRestApi(){
+  Serial.println("\n");
+
+  
+  client.setInsecure();
+  client.connect(rest_api_url, httpsPort);
+  
+  // API Request
+  http.begin(client, rest_api_url);
+  int code = http.GET();
+  
+  if (code == 200) {
+    String payload = http.getString();
+    DynamicJsonDocument jsonBuffer(1100);
+    deserializeJson(jsonBuffer, payload);
     JsonObject alarms = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["alarms"];
-    for (int i=0; i<2; i++){
-      int setted_value = alarms[myStrings[i]];
-      int current_value = ApiRequest(myStrings[i]);
+    String coins = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["coins"];
+    splittingStrToArray(coins);
+    bool flag = true;
 
-      String message = "Your alarm price = $";
-      message += setted_value;
-      Serial.println(message);
+    for (int i=0; i<10; i++){
+      flag = true;
+      if (selected_coins[i] != ""){
+        if (alarms.containsKey(selected_coins[i])){
+          int setted_value = alarms[selected_coins[i]];
+          int current_value = ApiRequest(selected_coins[i]);
+          String message = "Your alarm price = $";
+          message += setted_value;
+          Serial.println(message);
+          if (current_value >= setted_value ){
+                       
+            Serial.println("!!!ALARM!!!");
+            
+        
+          }
+          flag = false;
 
-
-      if (current_value >= setted_value ){
-        Serial.println("!!!ALARM!!!");
+          
+        }
+        if (flag){
+          int current_value = ApiRequest(selected_coins[i]);
+          Serial.println("There is no alarm for this coin");       
+        }
+        
+        
+      
         
       }
       
@@ -108,10 +162,6 @@ int ApiRequest(String key){
 
   Serial.println("------------ "+key+" Details------------");
 
-  WiFi.softAPdisconnect(false);
-  WiFi.enableAP(false);
-
-
   client.setInsecure();
   client.connect(url, httpsPort);
   
@@ -131,7 +181,6 @@ int ApiRequest(String key){
 
     Serial.println(message);
     
-    WiFi.softAP(message.c_str());
   } else {
     Serial.print("Failed to request to API. The HTTP Error Code: ");
     Serial.println(code);
@@ -141,5 +190,24 @@ int ApiRequest(String key){
   http.end();
   return price_coin;
 
+  
+}
+
+// To split the given string
+void splittingStrToArray(String text){
+  
+  int i=0;
+  char *p, string[128], delimiter[] = ",";
+
+  text.toCharArray(string, sizeof(string));
+  p = strtok(string, delimiter);
+  while(p && i < 10)
+  {
+    selected_coins[i] = p;
+    p = strtok(NULL, delimiter);
+    ++i;
+  }
+
+  
   
 }
