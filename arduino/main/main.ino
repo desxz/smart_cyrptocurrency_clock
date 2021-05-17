@@ -10,15 +10,16 @@ const char* password = "PYVT4NU9UREA"; //Enter Password
 const int httpsPort = 443;
 
 // Firebase Rest Api
-String rest_api_url = "https://crypto-currency-75f19-default-rtdb.europe-west1.firebasedatabase.app/.json";
+const String rest_api_url = "https://crypto-currency-75f19-default-rtdb.europe-west1.firebasedatabase.app/.json";
 
-
-String selected_coins[10];
-String myStrings[10];
+// Some Global Variables
+String coin_list[10];
+String coin_list_with_alarm[10];
 
 
 // API
 HTTPClient http;
+// WiFi Client
 WiFiClientSecure client;
 
 
@@ -46,49 +47,11 @@ void loop()
   FirebaseRestApi();
   
   
-  delay(20000); //Coindesk's API updates once twenty seconds
+  delay(20000); // This delay to control refresh time.
 }
 
-void FirebaseRestApi2(){
-  Serial.println("");
-  Serial.println("");
-
-
-  WiFi.softAPdisconnect(false);
-  WiFi.enableAP(false);
-
-
-  client.setInsecure();
-  client.connect(rest_api_url, httpsPort);
-  
-  // API Request
-  http.begin(client, rest_api_url);
-  int code = http.GET();
-  
-  if (code == 200) {
-    String payload = http.getString();
-    DynamicJsonDocument jsonBuffer(1100);
-    deserializeJson(jsonBuffer, payload);
-    String alarms = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["coins"];
-    splittingStrToArray(alarms);
-       
-    
-    
-  } 
-  else {
-    Serial.print("Failed to request to API. The HTTP Error Code: ");
-    Serial.println(code);
-    
-  }
-  
-  http.end();
-
-  
-}
-
-
-
-
+// The function used to get coins and its' alarms from Firebase
+// And also to compare alarm and current price
 void FirebaseRestApi(){
   Serial.println("\n");
 
@@ -107,14 +70,14 @@ void FirebaseRestApi(){
     JsonObject alarms = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["alarms"];
     String coins = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["coins"];
     splittingStrToArray(coins);
+	
     bool flag = true;
-
     for (int i=0; i<10; i++){
       flag = true;
-      if (selected_coins[i] != ""){
-        if (alarms.containsKey(selected_coins[i])){
-          int setted_value = alarms[selected_coins[i]];
-          int current_value = ApiRequest(selected_coins[i]);
+      if (coin_list[i] != ""){
+        if (alarms.containsKey(coin_list[i])){
+          int setted_value = alarms[coin_list[i]];
+          int current_value = ApiRequest(coin_list[i]);
           String message = "Your alarm price = $";
           message += setted_value;
           Serial.println(message);
@@ -122,23 +85,19 @@ void FirebaseRestApi(){
                        
             Serial.println("!!!ALARM!!!");
             
-        
           }
           flag = false;
 
           
         }
         if (flag){
-          int current_value = ApiRequest(selected_coins[i]);
+          int current_value = ApiRequest(coin_list[i]);
           Serial.println("There is no alarm for this coin");       
         }
         
         
-      
-        
       }
-      
-      
+   
     }
     
     
@@ -153,7 +112,8 @@ void FirebaseRestApi(){
   
 }
 
-
+// The function to get cryptocurrency prices
+// Thanks to coingecko.com
 int ApiRequest(String key){
 
   String url = "https://api.coingecko.com/api/v3/simple/price?ids="+key+"&vs_currencies=usd";
@@ -194,6 +154,7 @@ int ApiRequest(String key){
 }
 
 // To split the given string
+// The function used to split given string and assign it to the global variable.
 void splittingStrToArray(String text){
   
   int i=0;
@@ -203,11 +164,10 @@ void splittingStrToArray(String text){
   p = strtok(string, delimiter);
   while(p && i < 10)
   {
-    selected_coins[i] = p;
+    coin_list[i] = p;
     p = strtok(NULL, delimiter);
     ++i;
   }
 
-  
   
 }
