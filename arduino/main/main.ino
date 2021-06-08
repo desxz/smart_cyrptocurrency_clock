@@ -16,6 +16,8 @@ const String rest_api_url = "https://crypto-currency-75f19-default-rtdb.europe-w
 String coin_list[10];
 String coin_list_with_alarm[10];
 
+//LCD
+LiquidCrystal_I2C lcd(0x3f, 16, 2);
 
 // API
 HTTPClient http;
@@ -38,6 +40,10 @@ void setup(void)
   Serial.println(ssid);
   Serial.print("ESP8266 Modül'ünün IP Adresi:");
   Serial.print(WiFi.localIP());
+
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
   
 }
 
