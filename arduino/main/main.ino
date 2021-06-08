@@ -41,9 +41,9 @@ void setup(void)
   Serial.print("ESP8266 Modül'ünün IP Adresi:");
   Serial.print(WiFi.localIP());
 
-  lcd.begin();
+  lcd.begin(16,2);
   lcd.backlight();
-  lcd.setCursor(0, 0);
+  lcd.setCursor(5, 0);
   
 }
 
@@ -88,9 +88,12 @@ void FirebaseRestApi(){
           message += setted_value;
           Serial.println(message);
           if (current_value >= setted_value ){
-                       
-            Serial.println("!!!ALARM!!!");
-            
+            String Alarmlcd = "!!!ALARM!!! " + current_value;
+            Alarmlcd = Alarmlcd + " >= " + setted_value ; 
+                     
+            Serial.println(Alarmlcd);
+            lcd.print(Alarmlcd); 
+            lcd.setCursor(5, 1);
           }
           flag = false;
 
@@ -146,6 +149,8 @@ int ApiRequest(String key){
     message += price_coin;
 
     Serial.println(message);
+    lcd.print(message);
+    lcd.setCursor(5, 1);
     
   } else {
     Serial.print("Failed to request to API. The HTTP Error Code: ");
