@@ -145,7 +145,7 @@ int ApiRequest(String key){
     JsonObject coin = jsonBuffer[key];
     price_coin = coin["usd"];
     
-    String message = "1"+key+" = $";
+    String message = "1 "+key+" = $";
     message += price_coin;
 
     Serial.println(message);
