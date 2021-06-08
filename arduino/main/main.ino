@@ -2,11 +2,11 @@
 #include "ESP8266WiFi.h"
 #include "ESP8266HTTPClient.h"
 #include "ArduinoJson.h"
-
+#include "LiquidCrystal_I2C.h"
 
 // Wifi Details
-const char* ssid = "SUPERONLINE-WiFi_3177"; //Enter SSID
-const char* password = "PYVT4NU9UREA"; //Enter Password
+const char* ssid = "AirTies_Air5650_3NA7";
+const char* password = "Ali.gurbuz2021";
 const int httpsPort = 443;
 
 // Firebase Rest Api
