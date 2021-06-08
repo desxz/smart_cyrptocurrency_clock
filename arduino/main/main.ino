@@ -88,8 +88,8 @@ void FirebaseRestApi(){
           message += setted_value;
           Serial.println(message);
           if (current_value >= setted_value ){
-            String Alarmlcd;
-            Alarmlcd = "!!!ALARM!!! " + current_value +" >= " + setted_value ; 
+            String Alarmlcd = "!!!ALARM!!! ";
+            Alarmlcd = Alarmlcd + current_value +" >= " + setted_value ; 
                      
             Serial.println(Alarmlcd);
             lcd.print(Alarmlcd); 
