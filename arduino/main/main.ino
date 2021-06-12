@@ -5,8 +5,8 @@
 #include "LiquidCrystal_I2C.h"
 
 // Wifi Details
-const char* ssid = "AirTies_Air5650_3NA7";
-const char* password = "Ali.gurbuz2021";
+const char* ssid = "YOUR WIFI NETWORK NAME";
+const char* password = "YOUR PASSWORD";
 const int httpsPort = 443;
 
 // Firebase Rest Api
@@ -17,7 +17,7 @@ String coin_list[10];
 String coin_list_with_alarm[10];
 
 //LCD
-LiquidCrystal_I2C lcd(0x3f, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // API
 HTTPClient http;
@@ -29,21 +29,32 @@ void setup(void)
 { 
   Serial.begin(115200);
   WiFi.begin(ssid, password);
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Baglanti");
+  lcd.setCursor(0, 1);
+  lcd.print("kuruluyor");
   while (WiFi.status() != WL_CONNECTED) 
   {
-     delay(500);
+     delay(200);
      Serial.print("*");
+     lcd.print(".");
   }
-  
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(0, 0);
   Serial.println("");
   Serial.print("WiFi'ye bağlanıldı! Ağ Adı:");
   Serial.println(ssid);
+  
+  lcd.print("Baglanildi!");
+  
   Serial.print("ESP8266 Modül'ünün IP Adresi:");
   Serial.print(WiFi.localIP());
 
-  lcd.begin(16,2);
-  lcd.backlight();
-  lcd.setCursor(5, 0);
+  delay(2000);
+  lcd.clear();
   
 }
 
@@ -52,15 +63,15 @@ void loop()
   
   FirebaseRestApi();
   
-  
-  delay(20000); // This delay to control refresh time.
 }
+
+
 
 // The function used to get coins and its' alarms from Firebase
 // And also to compare alarm and current price
 void FirebaseRestApi(){
   Serial.println("\n");
-
+  lcd.setCursor(0, 0);
   
   client.setInsecure();
   client.connect(rest_api_url, httpsPort);
@@ -76,7 +87,7 @@ void FirebaseRestApi(){
     JsonObject alarms = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["alarms"];
     String coins = jsonBuffer["Users"]["Kemal"]["-M_qY8ZibGmEyjVr2fOf"]["coins"];
     splittingStrToArray(coins);
-	
+  
     bool flag = true;
     for (int i=0; i<10; i++){
       flag = true;
@@ -88,36 +99,37 @@ void FirebaseRestApi(){
           message += setted_value;
           Serial.println(message);
           if (current_value >= setted_value ){
-            String Alarmlcd = "!!!ALARM!!! ";
-            Alarmlcd = Alarmlcd + current_value +" >= " + setted_value ; 
-                     
+            String Alarmlcd = "ALARM ";
+            Alarmlcd = Alarmlcd + current_value +">=" + setted_value ; 
+            lcd.setCursor(0, 1);         
             Serial.println(Alarmlcd);
             lcd.print(Alarmlcd); 
-            lcd.setCursor(5, 1);
+            
           }
           flag = false;
-
-          
+                    
         }
         if (flag){
           int current_value = ApiRequest(coin_list[i]);
-          Serial.println("There is no alarm for this coin");       
+          Serial.println("There is no alarm for this coin");  
+          lcd.setCursor(0, 1);  
+          lcd.print("No Alarm ForCoin");   
         }
         
         
       }
-   
+      
     }
     
     
   } else {
     Serial.print("Failed to request to API. The HTTP Error Code: ");
     Serial.println(code);
+    lcd.print("Failed to request to API. The HTTP Error Code: "+ code);
     
   }
   
   http.end();
-
   
 }
 
@@ -145,13 +157,14 @@ int ApiRequest(String key){
     JsonObject coin = jsonBuffer[key];
     price_coin = coin["usd"];
     
-    String message = "1 "+key+" = $";
+    String message = ""+key+" = $";
     message += price_coin;
 
     Serial.println(message);
+    lcd.clear();
+    delay(200);
     lcd.print(message);
-    lcd.setCursor(5, 1);
-    
+
   } else {
     Serial.print("Failed to request to API. The HTTP Error Code: ");
     Serial.println(code);
